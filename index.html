@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>my-dashboard</title>
+  <title>My Work Dashboard</title>
   <link rel="stylesheet" href="style.css?v=10">
   <link rel="stylesheet" href="enhancements.css?v=1">
   <link rel="stylesheet" href="timeline.css">
@@ -13,13 +13,19 @@
   <main class="wrap">
     <header class="top">
       <div class="brand">MY WORK DASHBOARD</div>
-      <div class="date"><div id="today"></div><div class="clock">◷ <span id="time"></span></div><div class="top-actions"><span id="syncStatus" class="sync-chip" data-state="off" title="Googleスプレッドシート同期状態">● ローカル</span><span id="authUser" class="auth-user"></span><span id="viewState" class="save-state">閲覧画面</span><button id="toggleEdit" class="secondary">編集する</button><button id="resetData" class="secondary">初期状態に戻す</button></div><div id="gsi_button" style="display:none;margin-top:8px"></div></div>
+      <div class="date">
+        <div id="today"></div>
+        <div class="clock">◷ <span id="time"></span></div>
+        <div class="top-actions">
+          <span id="syncStatus" class="sync-chip" data-state="off">● ローカル</span>
+          <button id="loginBtn" class="login-btn">🔑 Googleでログイン</button>
+          <span id="authUser" class="auth-user" style="display:none"></span>
+          <span id="viewState" class="save-state">閲覧画面</span>
+          <button id="toggleEdit" class="secondary">編集する</button>
+          <button id="resetData" class="secondary">初期状態に戻す</button>
+        </div>
+      </div>
     </header>
-
-    <div id="loginBanner" class="login-banner" style="display:none">
-      <span>📋 Googleスプレッドシートと同期するにはログインしてください</span>
-      <div id="gsi_inline"></div>
-    </div>
 
     <h1>おはようございます。</h1>
     <p class="lead">今日も、ひとつずつ進めましょう。</p>
@@ -56,7 +62,7 @@
           </form>
         </section>
 
-        <!-- 完了済みタスク（完了したら自動表示） -->
+        <!-- 完了済みタスク -->
         <section class="card section" id="completedSection" style="display:none">
           <div class="head">
             <div class="icon" style="background:#e8f5e9;color:#2e7d32">✅</div>

@@ -532,4 +532,5 @@ function tick() {
 }
 tick(); setInterval(tick, 30000);
 render();
+document.getElementById('loginBtn').onclick = () => GasApi.showLogin();
 initGAS();

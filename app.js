@@ -532,5 +532,7 @@ function tick() {
 }
 tick(); setInterval(tick, 30000);
 render();
-document.getElementById('loginBtn').onclick = () => GasApi.showLogin();
+// ログインボタン（存在しない場合もある→null安全）
+const _lb = document.getElementById('loginBtn');
+if (_lb) _lb.onclick = () => GasApi.showLogin();
 initGAS();

@@ -139,8 +139,6 @@ function initGAS() {
     const authEl = document.querySelector('#authUser');
     if (!authEl) return;
     if (user) {
-      authEl.textContent = user.email;
-      document.getElementById('gsi_button').style.display = 'none';
       syncFromGAS();
     } else {
       authEl.textContent = '';
@@ -532,7 +530,4 @@ function tick() {
 }
 tick(); setInterval(tick, 30000);
 render();
-// ログインボタン（存在しない場合もある→null安全）
-const _lb = document.getElementById('loginBtn');
-if (_lb) _lb.onclick = () => GasApi.showLogin();
 initGAS();

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>my-dashboard</title>
+  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="enhancements.css?v=1">
+  <link rel="stylesheet" href="timeline.css">
+  <script src="https://accounts.google.com/gsi/client" async></script>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <div class="brand">MY WORK DASHBOARD</div>
+      <div class="date"><div id="today"></div><div class="clock">◷ <span id="time"></span></div><div class="top-actions"><span id="syncStatus" class="sync-chip" data-state="off" title="Googleスプレッドシート同期状態">● ローカル</span><span id="authUser" class="auth-user"></span><span id="viewState" class="save-state">閲覧画面</span><button id="toggleEdit" class="secondary">編集する</button><button id="resetData" class="secondary">初期状態に戻す</button></div><div id="gsi_button" style="display:none;margin-top:8px"></div></div>
+    </header>
+
+    <h1>おはようございます。</h1>
+    <p class="lead">今日も、ひとつずつ進めましょう。</p>
+
+    <div class="link-bar">
+      <div id="linkList" class="link-list"></div>
+      <button id="addLink" class="secondary edit-only link-bar-add">＋</button>
+    </div>
+
+    <section class="card focus focus-wide">
+      <div class="icon">✧</div>
+      <div>
+        <div class="eyebrow">最初の15分にすること <small>FIRST STEP</small></div>
+        <div id="focusText" class="focus-title"></div>
+      </div>
+      <button id="editFocus" class="edit edit-only">クリックして編集</button>
+    </section>
+
+    <div class="grid">
+      <div class="stack">
+
+        <!-- 今日やること（未完了のみ） -->
+        <section class="card section">
+          <div class="head">
+            <div class="icon">✓</div>
+            <h2>今日やること</h2>
+            <span id="taskCount" class="count">残り 0 件</span>
+          </div>
+          <div class="progress"><i id="progress"></i></div>
+          <div id="taskList"></div>
+          <form id="taskForm" class="add-line edit-only">
+            <input id="taskInput" placeholder="追加する作業を書く" maxlength="120">
+            <button class="primary">追加</button>
+          </form>
+        </section>
+
+        <!-- 完了済みタスク（完了したら自動表示） -->
+        <section class="card section" id="completedSection" style="display:none">
+          <div class="head">
+            <div class="icon" style="background:#e8f5e9;color:#2e7d32">✅</div>
+            <h2>完了済み</h2>
+            <span id="completedCount" class="count" style="color:#2e7d32">0件</span>
+          </div>
+          <div id="completedList"></div>
+        </section>
+
+      </div>
+
+      <!-- 全タスク一覧 -->
+      <section class="card section" id="backlogSection">
+        <div class="head">
+          <div class="icon" style="background:#f0f4ff;color:#4455cc">≡</div>
+          <h2>全タスク一覧</h2>
+          <span class="save-state" style="font-size:12px">セナ管理</span>
+        </div>
+        <div id="backlogList"></div>
+      </section>
+    </div>
+
+    <!-- タイムテーブル -->
+    <section class="card section timeline" style="margin-top:24px">
+      <div class="head">
+        <div class="icon" style="background:#fff3e0;color:#e65100">◴</div>
+        <h2>今日のタイムライン</h2>
+        <span id="timelineStatus" class="save-state" style="color:#e65100;margin-left:auto">自動生成</span>
+      </div>
+      <p id="timelineIntro" class="timeline-intro"></p>
+      <div id="timelineList" class="timeline-list"></div>
+    </section>
+
+    <section class="card section memo">
+      <div class="head">
+        <div class="icon" style="background:#e7f8fa;color:#1598b7">▣</div>
+        <h2>できたこと・メモ</h2>
+        <span id="saveState" class="save-state">自動保存</span>
+      </div>
+      <textarea id="memo" placeholder="今日できたこと、次にやることを書く"></textarea>
+    </section>
+
+    <section class="card backup">
+      <div>
+        <h2>バックアップ・持ち帰り</h2>
+        <p>入力内容はこのPCのこのブラウザだけに保存されます。</p>
+      </div>
+      <div class="backup-actions">
+        <button id="exportData" class="primary">バックアップを書き出す</button>
+        <button id="importData" class="secondary">読み込んで復元</button>
+        <input id="fileInput" type="file" accept="application/json,.json" hidden>
+      </div>
+    </section>
+  </main>
+  <div id="modalRoot" class="hidden"></div>
+  <script src="dashboard-data.js"></script>
+  <script src="gas-config.js"></script>
+  <script src="gas-api.js"></script>
+  <script src="app.js?v=12"></script>
+</body>
+</html>

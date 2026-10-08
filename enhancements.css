@@ -1,0 +1,8 @@
+/* チェック状態と完了解除 */
+.row.is-checked .check{background:var(--blue);border-color:var(--blue);color:#fff}
+.complete-btn.cancel{color:var(--red)}
+
+/* よく使うリンクのロゴ風マーク */
+#linkList .link-card:nth-child(1) .link-badge{background:#f2eee9;color:#1f1f1f;border-radius:50%;font-family:Georgia,serif;font-size:20px}
+#linkList .link-card:nth-child(2) .link-badge{background:#111;color:#fff;border-radius:50%;font-size:18px}
+#linkList .link-card:nth-child(3) .link-badge{background:#e8f0ff;color:#2164d8;border-radius:9px;font-size:18px}

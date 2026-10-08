@@ -1,0 +1,17 @@
+node_modules/
+gas/
+*.txt
+._*
+.DS_Store
+daily-sync-data.js
+ai-secretary-data.js
+morning-plan-data.js
+timeline-data.js
+google-sync.js
+sync-daily.js
+package.json
+package-lock.json
+DAILY-SYNC-SETUP.md
+fallback-ui.js
+enhancements.js
+calendar.css

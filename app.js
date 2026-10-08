@@ -234,7 +234,7 @@ function render() {
   // ── 日時 ──
   document.querySelector('#focusText').textContent = data.focus;
   document.querySelector('#memo').value = data.memo || '';
-  document.querySelector('#today').textContent = new Intl.DateTimeFormat('ja-JP', { dateStyle: 'long', weekday: 'short' }).format(new Date());
+  document.querySelector('#today').textContent = new Intl.DateTimeFormat('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' }).format(new Date());
 
   // ── タスクを未完了 / 完了済みに分類 ──
   const activeTasks = data.tasks.filter(t => !t.done).sort((a, b) => (rank[a.priority] ?? 1) - (rank[b.priority] ?? 1));

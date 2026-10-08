@@ -30,8 +30,24 @@ const GasApi = (() => {
   }
 
   function isValid() {
-    // 5分のバッファを持って有効期限チェック
     return !!_token && Date.now() / 1000 < _exp - 300;
+  }
+
+  function _showLoginBanner() {
+    const banner = document.getElementById('loginBanner');
+    const inline = document.getElementById('gsi_inline');
+    if (banner) banner.style.display = 'flex';
+    if (inline && !inline.hasChildNodes() && typeof google !== 'undefined') {
+      google.accounts.id.renderButton(inline, {
+        type: 'standard', shape: 'pill', theme: 'filled_blue',
+        text: 'signin_with', size: 'large', locale: 'ja',
+      });
+    }
+  }
+
+  function _hideLoginBanner() {
+    const banner = document.getElementById('loginBanner');
+    if (banner) banner.style.display = 'none';
   }
 
   function init(onAuth) {
@@ -41,7 +57,7 @@ const GasApi = (() => {
     const tok = sessionStorage.getItem('gsi_tok');
     const exp = parseInt(sessionStorage.getItem('gsi_exp') || '0');
     if (tok && Date.now() / 1000 < exp - 300) {
-      if (_setSession(tok)) { onAuth(_user); return; }
+      if (_setSession(tok)) { _hideLoginBanner(); onAuth(_user); return; }
     }
 
     // Googleライブラリの読み込みを待つ
@@ -53,24 +69,24 @@ const GasApi = (() => {
       google.accounts.id.initialize({
         client_id:   GAS_CONFIG.CLIENT_ID,
         callback:    resp => {
-          if (_setSession(resp.credential) && _cb) _cb(_user);
+          if (_setSession(resp.credential) && _cb) {
+            _hideLoginBanner();
+            _cb(_user);
+          }
         },
         auto_select: true,
         use_fedcm_for_prompt: false,
       });
+
+      // One Tapを試みる
       google.accounts.id.prompt((notification) => {
-        // One Tapが表示されない場合はボタンを表示
         if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          const btn = document.getElementById('gsi_button');
-          if (btn) {
-            btn.style.display = 'block';
-            google.accounts.id.renderButton(btn, {
-              type: 'standard', shape: 'pill', theme: 'outline',
-              text: 'signin_with', size: 'medium', locale: 'ja',
-            });
-          }
+          _showLoginBanner();
         }
       });
+
+      // 3秒後にも未ログインならバナーを確実に表示
+      setTimeout(() => { if (!isValid()) _showLoginBanner(); }, 3000);
     };
     setup();
   }
@@ -79,13 +95,13 @@ const GasApi = (() => {
     _clear();
     if (typeof google !== 'undefined') google.accounts.id.disableAutoSelect();
     if (_cb) _cb(null);
+    _showLoginBanner();
   }
 
   async function call(action, data = {}) {
     if (!isValid()) throw new Error('ログインが必要です');
     const res = await fetch(GAS_CONFIG.GAS_URL, {
       method:  'POST',
-      // text/plain にすることでCORSプリフライトを回避（GASの制限）
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body:    JSON.stringify({ idToken: _token, action, data }),
     });
